@@ -1,15 +1,15 @@
 [features]
 seeds = false
 skip-lint = false
-[programs.localnet]
+[programs.devnet]
 diamondhanding_solana_program = "5Zm2UQMSM63NLJGkQYP6xqqGm2EPzYyVNtyPpJnJb5iD"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
-wallet = "/Users/shellsnail/.config/solana/id.json"
+cluster = "devnet"
+wallet = "/Users/shellsnail/diamondhanding-solana-program/DH2cGLAXGn6CTsNU3WrcYrwpyGuX6E7ZaqGhLUj9P6aT.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
