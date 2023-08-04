@@ -1,0 +1,1 @@
+1. Ensure you have set your RPC URL and Keypair path to the correct network i.e. Devnet or Mainnet Beta using `solana config set` command.

@@ -6,3 +6,8 @@ target
 node_modules
 test-ledger
 .yarn
+
+setConfig.txt
+diamondhanding_dev.json
+DH2cGLAXGn6CTsNU3WrcYrwpyGuX6E7ZaqGhLUj9P6aT.json
+dhhzBBHLweZLz5R2nEJjNSsNq6KpZADqRtiEyNRtAsB.json
