@@ -5,7 +5,7 @@ use anchor_lang::prelude::*;
 declare_id!("5Zm2UQMSM63NLJGkQYP6xqqGm2EPzYyVNtyPpJnJb5iD");
 
 #[program]
-mod hello_world {
+mod diamondhanding_solana_program {
     use super::*;
     pub fn say_hello(ctx: Context<SayHello>) -> Result<()> {
         let counter = &mut ctx.accounts.counter;
@@ -27,6 +27,7 @@ pub struct Counter {
     // This is a bit like a schema for a MongoDB model. 1 Account = 1 document.
     // Naturally the public key is the document id already.
     count: u64,
+    signer: Pubkey,
 }
 
 #[derive(Accounts)]
@@ -39,9 +40,16 @@ pub struct SayHello<'info> {
 #[derive(Accounts)]
 pub struct Initialize<'info> {
     // this is a bit like defining the function types and constraints before implementing it.
-    #[account(init, payer = signer, space = 8 + 8)]
+    #[account(init, seeds = [b"counter", signer.key().as_ref()], bump, payer = signer, space = 100)]
     pub counter: Account<'info, Counter>,
     #[account(mut)]
     pub signer: Signer<'info>,
     pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct UpdateCounter<'info> {
+    signer: Signer<'info>,
+    #[account(mut, has_one = signer)]
+    counter: Account<'info, Counter>,
 }
