@@ -1,4 +1,4 @@
-#Diamond Handing
+# Diamond Handing
 
 This program is built during the OPOS Hackathon.
 
