@@ -8,8 +8,6 @@ use anchor_spl::{
 pub mod error;
 pub mod state;
 
-// This is your program's public key and it will update
-// automatically when you build the project.
 declare_id!("5Zm2UQMSM63NLJGkQYP6xqqGm2EPzYyVNtyPpJnJb5iD");
 
 #[program]
@@ -28,12 +26,6 @@ mod diamondhanding_solana_program {
         sol_store.can_manually_unlock = can_manually_unlock.clone();
         sol_store.signer = ctx.accounts.signer.key.clone();
 
-        msg!(
-            "Initialized new sol store. Unlock date: {}, Can manually unlock: {}, Signer: {}",
-            sol_store.unlock_date,
-            sol_store.can_manually_unlock,
-            sol_store.signer
-        );
         Ok(())
     }
 
@@ -50,7 +42,6 @@ mod diamondhanding_solana_program {
             },
         );
         system_program::transfer(cpi_context, amount)?;
-        msg!("Deposited {} lamports to {}", amount, sol_store.signer);
         Ok(())
     }
 
@@ -73,12 +64,6 @@ mod diamondhanding_solana_program {
         spl_store.can_manually_unlock = can_manually_unlock.clone();
         spl_store.signer = ctx.accounts.signer.key.clone();
 
-        msg!(
-            "Initialized new SPL store. Unlock date: {}, Can manually unlock: {}, Signer: {}",
-            spl_store.unlock_date,
-            spl_store.can_manually_unlock,
-            spl_store.signer
-        );
         Ok(())
     }
 
@@ -150,7 +135,6 @@ mod diamondhanding_solana_program {
 
 #[derive(Accounts)]
 pub struct InitSolStore<'info> {
-    // this is a bit like defining the function types and constraints before implementing it.
     #[account(init, seeds = [b"sol", signer.key().as_ref()], bump, payer = signer, space = 8 + Store::MAX_SIZE )]
     pub sol_store: Account<'info, Store>,
     #[account(mut)]
@@ -160,7 +144,7 @@ pub struct InitSolStore<'info> {
 
 #[derive(Accounts)]
 pub struct DepositSol<'info> {
-    #[account(mut, has_one = signer)]
+    #[account(mut, has_one = signer,)]
     pub sol_store: Account<'info, Store>,
     #[account(mut)]
     pub signer: Signer<'info>,
@@ -177,7 +161,6 @@ pub struct WithdrawSolAndCloseAccount<'info> {
 
 #[derive(Accounts)]
 pub struct InitSplStore<'info> {
-    // this is a bit like defining the function types and constraints before implementing it.
     #[account(init, seeds = [b"spl", signer.key().as_ref(), mint.key().as_ref()], bump, payer = signer, space = 8 + Store::MAX_SIZE )]
     pub spl_store: Account<'info, Store>,
     #[account(mut)]
@@ -188,7 +171,6 @@ pub struct InitSplStore<'info> {
 
 #[derive(Accounts)]
 pub struct InitAssociatedTokenAccount<'info> {
-    // this is a bit like defining the function types and constraints before implementing it.
     #[account(seeds = [b"spl", signer.key().as_ref(), mint.key().as_ref()], bump, has_one = signer, )]
     pub spl_store: Account<'info, Store>,
     #[account(

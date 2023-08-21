@@ -3,9 +3,6 @@ use std::convert::TryInto;
 
 #[account]
 pub struct Store {
-    // this means that the Account will be known as a Counter and it will store a count data for us.
-    // This is a bit like a schema for a MongoDB model. 1 Account = 1 document.
-    // Naturally the public key is the document id already.
     pub unlock_date: i64,
     pub can_manually_unlock: bool,
     pub signer: Pubkey,
